@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { SpinnerCircular } from "spinners-react";
+import { StyledModal } from "ui";
 
 const List = (props) => {
   const { className } = props;
   const [songs, setSongs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [activeSong, setActiveSong] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     fetchSongs();
@@ -43,18 +46,36 @@ const List = (props) => {
       ) : (
         <div>
           <div>
-            <select onChange={handleSelect}>
-              <option value="None">None</option>
-              <option value="Ascending">Ascending (by length)</option>
-              <option value="Descending">Descending (by length)</option>
-            </select>
+            <div className="select-wrapper">
+              <select onChange={handleSelect}>
+                <option value="None">None</option>
+                <option value="Ascending">Ascending</option>
+                <option value="Descending">Descending</option>
+              </select>
+            </div>
+            <h2>Top 10 songs</h2>
+            <ul>
+              {songs.map((song) => (
+                <li
+                  onClick={() => {
+                    setActiveSong(song);
+                    setShowModal(true);
+                  }}
+                  key={song.id}
+                >
+                  {song.title}
+                </li>
+              ))}
+            </ul>
           </div>
-          <h2>Top 10 songs</h2>
-          <ul>
-            {songs.map(({ title, id }) => (
-              <li key={id}>{title}</li>
-            ))}
-          </ul>
+
+          {showModal ? (
+            <StyledModal
+              setShowModal={() => setShowModal(false)}
+              activeSong={activeSong}
+              showModal={showModal}
+            />
+          ) : null}
         </div>
       )}
     </div>

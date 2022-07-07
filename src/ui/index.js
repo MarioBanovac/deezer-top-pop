@@ -1,5 +1,5 @@
 import styled, { createGlobalStyle } from "styled-components";
-import { List } from "components";
+import { List, Modal } from "components";
 
 export const GlobalStyle = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600;700&display=swap');
@@ -34,6 +34,7 @@ export const GlobalStyle = createGlobalStyle`
         border:none;
         outline:none;
         background:none;
+        cursor:pointer;
     }
 
     select {
@@ -48,14 +49,16 @@ export const GlobalStyle = createGlobalStyle`
         background-color: #2c3e50;
         background-image: none;
         cursor:pointer;
+        width:200px;
 `;
 
 export const StyledList = styled(List)`
   & div {
-    width: 500px;
     text-align: center;
-    display:flex;
-    flex-direction:column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
   }
 
   & div h2 {
@@ -64,20 +67,20 @@ export const StyledList = styled(List)`
     font-size: 1.8rem;
     text-align: center;
     color: #fff;
+    margin-bottom: 20px;
   }
 
-  & div div {
+  .select-wrapper {
     position: relative;
     display: flex;
-    width: 50%;
-    margin:0 auto;
+    margin: 0 auto;
     height: 3em;
     border-radius: 0.25em;
     overflow: hidden;
-    margin-bottom:20px;
+    margin-bottom: 20px;
   }
 
-  & div div::after {
+  .select-wrapper::after {
     content: "\\25BC";
     position: absolute;
     top: 0;
@@ -103,5 +106,40 @@ export const StyledList = styled(List)`
     background: #25bcff;
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
     color: #fff;
+  }
+`;
+
+export const StyledModal = styled(Modal)`
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  border-radius: 5px;
+  opacity: ${({ showModal }) => (showModal ? "1" : "0")};
+  pointer-events: ${({ showModal }) => (showModal ? "auto" : "none")};
+
+  .modal-container{
+    border-radius:8px;
+  }
+
+  & div {
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 500px;
+    max-width: 100%;
+    padding: 30px 50px;
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: #03a9f4;
+    color: #fff;
+    border-radius: 8px;
+    margin-top: 20px;
   }
 `;
